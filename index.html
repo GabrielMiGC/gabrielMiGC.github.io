@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gabriel Miranda — Platform Engineer & Data Architect" />
+  <title>Gabriel Miranda · Platform Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --bg:          #0d1117;
+      --bg-card:     #161b22;
+      --bg-hover:    #1c2330;
+      --border:      #30363d;
+      --border-soft: #21262d;
+      --text:        #c9d1d9;
+      --muted:       #8b949e;
+      --white:       #f0f6fc;
+      --accent:      #00ffa3;
+      --accent-dim:  rgba(0,255,163,.12);
+      --accent-glow: 0 0 22px rgba(0,255,163,.35);
+      --blue:        #58a6ff;
+      --blue-dim:    rgba(88,166,255,.12);
+      --purple:      #bc8cff;
+      --purple-dim:  rgba(188,140,255,.12);
+      --yellow:      #e3b341;
+      --yellow-dim:  rgba(227,179,65,.12);
+      --mono:        'JetBrains Mono', monospace;
+      --sans:        'Inter', sans-serif;
+      --radius:      10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* Scroll progress bar */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      z-index: 200;
+      transition: width .1s linear;
+    }
+
+    /* Grid overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,163,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,163,.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: .95rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -.02em;
+    }
+    .nav-logo span { color: var(--muted); }
+
+    .nav-right { display: flex; align-items: center; gap: 1.8rem; }
+
+    .nav-links {
+      display: flex; list-style: none; gap: 1.4rem;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .02em;
+      transition: color .2s;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .lang-btn {
+      font-family: var(--mono);
+      font-size: .75rem;
+      padding: 5px 14px;
+      border: 1px solid rgba(0,255,163,.5);
+      background: transparent;
+      color: var(--accent);
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: .05em;
+      transition: all .2s;
+    }
+    .lang-btn:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      box-shadow: var(--accent-glow);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 80px 2.5rem 3rem;
+      position: relative; z-index: 1;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Glowing orb */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 10%; left: 60%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,255,163,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .terminal-block {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      min-height: 3.2rem;
+    }
+    .terminal-block .prompt { color: var(--accent); }
+    .terminal-output {
+      color: rgba(0,255,163,.65);
+      display: block;
+      margin-top: 2px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 7px; height: .9em;
+      background: var(--accent);
+      vertical-align: middle;
+      margin-left: 1px;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-name {
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: .4rem;
+      letter-spacing: -.03em;
+    }
+    .hero-name .green { color: var(--accent); }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: clamp(.9rem, 2vw, 1.15rem);
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+    }
+    .hero-role .hl { color: var(--blue); }
+
+    .hero-summary {
+      max-width: 600px;
+      font-size: .95rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex; gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .stat {
+      display: flex; flex-direction: column;
+    }
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .75rem;
+      color: var(--muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 2.8rem;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 26px;
+      background: var(--accent);
+      color: #0d1117;
+      font-family: var(--mono);
+      font-size: .85rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all .2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover {
+      box-shadow: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 26px;
+      border: 1px solid rgba(0,255,163,.45);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: .85rem;
+      text-decoration: none;
+      border-radius: 8px;
+      background: transparent;
+      transition: all .2s;
+    }
+    .btn-ghost:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-socials {
+      display: flex; gap: 1.8rem; flex-wrap: wrap;
+    }
+    .social-link {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color .2s;
+    }
+    .social-link svg { width: 15px; height: 15px; fill: currentColor; }
+    .social-link:hover { color: var(--accent); }
+
+    /* ============================================================
+       SECTIONS
+    ============================================================ */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 90px 2.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .sec-head {
+      display: flex; align-items: center; gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .sec-num {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .sec-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--white);
+      white-space: nowrap;
+    }
+    .sec-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      min-width: 30px;
+    }
+
+    /* ============================================================
+       SKILLS
+    ============================================================ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      transition: border-color .25s, transform .2s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-label.green { color: var(--accent); }
+    .skill-label.blue  { color: var(--blue);   }
+    .skill-label.purple{ color: var(--purple);  }
+    .skill-label.yellow{ color: var(--yellow);  }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: .78rem;
+      padding: 4px 11px;
+      border-radius: 5px;
+      cursor: default;
+      transition: all .2s;
+      border: 1px solid transparent;
+    }
+    .tag.green  { background: var(--accent-dim);  color: var(--text); border-color: rgba(0,255,163,.2); }
+    .tag.green:hover  { border-color: var(--accent);  color: var(--accent);  box-shadow: 0 0 8px rgba(0,255,163,.2); }
+    .tag.blue   { background: var(--blue-dim);    color: var(--text); border-color: rgba(88,166,255,.2); }
+    .tag.blue:hover   { border-color: var(--blue);    color: var(--blue);    box-shadow: 0 0 8px rgba(88,166,255,.2); }
+    .tag.purple { background: var(--purple-dim);  color: var(--text); border-color: rgba(188,140,255,.2); }
+    .tag.purple:hover { border-color: var(--purple);  color: var(--purple);  box-shadow: 0 0 8px rgba(188,140,255,.2); }
+    .tag.yellow { background: var(--yellow-dim);  color: var(--text); border-color: rgba(227,179,65,.2); }
+    .tag.yellow:hover { border-color: var(--yellow);  color: var(--yellow);  box-shadow: 0 0 8px rgba(227,179,65,.2); }
+
+    /* ============================================================
+       EXPERIENCE TIMELINE
+    ============================================================ */
+    .timeline { padding-left: 1.8rem; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 6px; bottom: 20px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      padding-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .tl-item.vis { opacity: 1; transform: translateX(0); }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.12rem; top: 5px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .tl-date {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--accent);
+      margin-bottom: .35rem;
+    }
+    .tl-company {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .tl-role {
+      font-size: .88rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: .9rem;
+    }
+    .tl-bullets { list-style: none; }
+    .tl-bullets li {
+      font-size: .875rem;
+      color: var(--text);
+      padding: 3px 0 3px 1.1rem;
+      position: relative;
+      line-height: 1.6;
+    }
+    .tl-bullets li::before {
+      content: '▸';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: .75rem;
+      top: 5px;
+    }
+
+    /* ============================================================
+       PROJECTS
+    ============================================================ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .proj-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      display: flex; flex-direction: column; gap: .75rem;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .45s ease, transform .45s ease, border-color .25s, box-shadow .25s;
+    }
+    .proj-card.vis { opacity: 1; transform: translateY(0); }
+    .proj-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 24px rgba(0,255,163,.07);
+      transform: translateY(-3px);
+    }
+
+    .proj-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .proj-name {
+      font-size: .98rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .proj-cat {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--accent);
+      margin-top: 3px;
+    }
+    .proj-gh-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color .2s;
+      flex-shrink: 0;
+    }
+    .proj-gh-link:hover { color: var(--accent); }
+
+    .proj-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .proj-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+    .stack-tag {
+      font-family: var(--mono);
+      font-size: .7rem;
+      padding: 2px 9px;
+      background: var(--blue-dim);
+      border-radius: 4px;
+      color: var(--blue);
+    }
+
+    /* ============================================================
+       EDUCATION
+    ============================================================ */
+    .edu-main {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      transition: border-color .25s;
+      margin-bottom: 1.2rem;
+    }
+    .edu-main:hover { border-color: var(--accent); }
+
+    .edu-degree {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .edu-school {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .edu-year {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .research-list { display: flex; flex-direction: column; gap: .8rem; }
+    .research-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .8rem 1.2rem;
+      font-size: .875rem;
+      transition: border-color .25s;
+    }
+    .research-item:hover { border-color: var(--purple); }
+    .r-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--purple);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 2.2rem 2.5rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--muted);
+      position: relative; z-index: 1;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       SCROLL-TO-TOP
+    ============================================================ */
+    #scroll-top {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 40px; height: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 1rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all .3s;
+      z-index: 90;
+      text-decoration: none;
+    }
+    #scroll-top.show { opacity: 1; transform: translateY(0); }
+    #scroll-top:hover { background: var(--accent-dim); box-shadow: var(--accent-glow); }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-inner > * { animation: fadeUp .6s ease both; }
+    .hero-inner > *:nth-child(1) { animation-delay: .05s; }
+    .hero-inner > *:nth-child(2) { animation-delay: .15s; }
+    .hero-inner > *:nth-child(3) { animation-delay: .25s; }
+    .hero-inner > *:nth-child(4) { animation-delay: .35s; }
+    .hero-inner > *:nth-child(5) { animation-delay: .45s; }
+    .hero-inner > *:nth-child(6) { animation-delay: .55s; }
+    .hero-inner > *:nth-child(7) { animation-delay: .65s; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .section { padding: 70px 1.2rem; }
+      .hero { padding: 80px 1.2rem 2rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 2.4rem; }
+      .stats-row { gap: 1.5rem; }
+      .edu-main { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">gabriel<span>.dev</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#skills"     data-key="nav_skills">skills</a></li>
+      <li><a href="#experience" data-key="nav_exp">experience</a></li>
+      <li><a href="#projects"   data-key="nav_proj">projects</a></li>
+      <li><a href="#education"  data-key="nav_edu">education</a></li>
+    </ul>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">PT</button>
+  </div>
+</nav>
+
+<!-- SCROLL TO TOP -->
+<a href="#hero" id="scroll-top" aria-label="Back to top">↑</a>
+
+<!-- ============================
+     HERO
+============================= -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+
+    <div class="terminal-block" id="terminal-wrap">
+      <span class="prompt">~ </span><span id="term-cmd"></span><span class="cursor"></span>
+      <span class="terminal-output" id="term-out"></span>
+    </div>
+
+    <h1 class="hero-name">Gabriel <span class="green">Miranda</span></h1>
+
+    <p class="hero-role">
+      <span class="hl" data-key="role1">Platform Engineer</span>
+      <span style="color:var(--muted)"> &amp; </span>
+      <span data-key="role2">Data Architect</span>
+    </p>
+
+    <p class="hero-summary" data-key="hero_bio">
+      Computer Science graduate from UFC, specialized in scalable system architecture,
+      secure data engineering, and cloud infrastructure. I build robust, observable
+      platforms from the ground up using AWS, PostgreSQL &amp; Terraform.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">3+</span>
+        <span class="stat-label" data-key="stat_exp">years exp.</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label" data-key="stat_proj">projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20+</span>
+        <span class="stat-label" data-key="stat_tech">technologies</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">UFC</span>
+        <span class="stat-label" data-key="stat_uni">CS graduate</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary" data-key="cta_work">View my work ↓</a>
+      <a href="mailto:gabrielMGC@proton.me" class="btn-ghost" data-key="cta_contact">Get in touch</a>
+    </div>
+
+    <div class="hero-socials">
+      <!-- GitHub -->
+      <a href="https://github.com/gabrielMiGC" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
+            0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755
+            -1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305
+            3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38
+            1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399
+            3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873
+            .12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81
+            2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297
+            c0-6.627-5.373-12-12-12"/>
+        </svg>
+        gabrielMiGC
+      </a>
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/gabrielmgc" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136
+            1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85
+            3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065
+            2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771
+            C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227
+            24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        gabrielmgc
+      </a>
+      <!-- Email -->
+      <a href="mailto:gabrielMGC@proton.me" class="social-link">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9
+            2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        gabrielMGC@proton.me
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     SKILLS
+============================= -->
+<section class="section" id="skills">
+  <div class="sec-head">
+    <span class="sec-num">01.</span>
+    <h2 class="sec-title" data-key="sec_skills">Technical Skills</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="skills-grid">
+
+    <div class="skill-card">
+      <div class="skill-label green">// <span data-key="sk_data">Data</span></div>
+      <div class="tags">
+        <span class="tag green">Databricks</span>
+        <span class="tag green">PostgreSQL 15+</span>
+        <span class="tag green">RLS</span>
+        <span class="tag green">Pgcrypto</span>
+        <span class="tag green">Redis</span>
+        <span class="tag green">Prisma ORM</span>
+        <span class="tag green">MongoDB</span>
+        <span class="tag green">Firebase</span>
+        <span class="tag green">PySpark</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-label blue">// <span data-key="sk_cloud">Cloud &amp; Infrastructure</span></div>
+      <div class="tags">
+        <span class="tag blue">AWS ECS / Fargate</span>
+        <span class="tag blue">AWS RDS</span>
+        <span class="tag blue">AWS S3</span>
+        <span class="tag blue">CloudFront</span>
+        <span class="tag blue">Terraform</span>
+        <span class="tag blue">Docker</span>
+        <span class="tag blue">Kubernetes</span>
+        <span class="tag blue">Nginx</span>
+        <span class="tag blue">VPCs</span>
+        <span class="tag blue">Linux</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-label purple">// <span data-key="sk_backend">Backend</span></div>
+      <div class="tags">
+        <span class="tag purple">Node.js</span>
+        <span class="tag purple">Python</span>
+        <span class="tag purple">Django</span>
+        <span class="tag purple">FastAPI</span>
+        <span class="tag purple">TypeScript</span>
+        <span class="tag purple">SQL / PL/pgSQL</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-label yellow">// <span data-key="sk_devops">DevOps &amp; Security</span></div>
+      <div class="tags">
+        <span class="tag yellow">Prometheus</span>
+        <span class="tag yellow">Grafana</span>
+        <span class="tag yellow">Alertmanager</span>
+        <span class="tag yellow">GitHub Actions</span>
+        <span class="tag yellow">CI/CD</span>
+        <span class="tag yellow">JWT</span>
+        <span class="tag yellow">Encryption (ByteA)</span>
+        <span class="tag yellow">RBAC</span>
+        <span class="tag yellow">LGPD</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     EXPERIENCE
+============================= -->
+<section class="section" id="experience">
+  <div class="sec-head">
+    <span class="sec-num">02.</span>
+    <h2 class="sec-title" data-key="sec_exp">Experience</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Jun 2025 — <span data-key="present">Present</span></div>
+      <div class="tl-company">Miranda Labs</div>
+      <div class="tl-role" data-key="e1_role">Platform Engineer &amp; Data Architect</div>
+      <ul class="tl-bullets">
+        <li data-key="e1_b1">Designed a unified event management platform with high availability and transactional security.</li>
+        <li data-key="e1_b2">Implemented Infrastructure as Code (Terraform) for automated provisioning of AWS environments (Dev/Prod).</li>
+        <li data-key="e1_b3">Optimized database performance using Redis and advanced PostgreSQL strategies, reducing query latency.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Mar 2025 — Jan 2026</div>
+      <div class="tl-company">Universidade Federal do Ceará (UFC)</div>
+      <div class="tl-role" data-key="e2_role">Database &amp; Backend Systems Intern</div>
+      <ul class="tl-bullets">
+        <li data-key="e2_b1">Developed an inventory management system focused on data traceability and ACID-compliant transactions.</li>
+        <li data-key="e2_b2">Authored complex Stored Procedures and Triggers in PL/pgSQL for automatic stock reconciliation.</li>
+        <li data-key="e2_b3">Built ETL pipelines using PySpark to streamline legacy data migration.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Set 2023 — Nov 2023</div>
+      <div class="tl-company">Assistência Virtual Empresarial (AVE)</div>
+      <div class="tl-role" data-key="e3_role">Security Analysis Intern</div>
+      <ul class="tl-bullets">
+        <li data-key="e3_b1">Conducted code reviews on backend modules, focusing on Firebase security rules and RBAC.</li>
+        <li data-key="e3_b2">Improved data handling protocols for a social network, mitigating security vulnerabilities.</li>
+        <li data-key="e3_b3">Performed application data monitoring and security auditing.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     PROJECTS
+============================= -->
+<section class="section" id="projects">
+  <div class="sec-head">
+    <span class="sec-num">03.</span>
+    <h2 class="sec-title" data-key="sec_proj">Projects</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-name">Eclipse Marketplace</div>
+          <div class="proj-cat" data-key="p1_cat">Platform Engineering &amp; Data Security</div>
+        </div>
+        <a href="https://github.com/gabrielMiGC" target="_blank" rel="noopener" class="proj-gh-link" title="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+      </div>
+      <p class="proj-desc" data-key="p1_desc">
+        Multi-tenant infrastructure on AWS S3 with isolated PostgreSQL schemas. Row Level Security (RLS) + Pgcrypto encryption. Full observability stack with Prometheus/Grafana and real-time Telegram alerts.
+      </p>
+      <div class="proj-stack">
+        <span class="stack-tag">AWS S3</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Terraform</span>
+        <span class="stack-tag">Prometheus</span>
+        <span class="stack-tag">Grafana</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-name">Sistema TEA</div>
+          <div class="proj-cat" data-key="p2_cat">DevOps &amp; Cloud Native</div>
+        </div>
+        <a href="https://github.com/gabrielMiGC" target="_blank" rel="noopener" class="proj-gh-link" title="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+      </div>
+      <p class="proj-desc" data-key="p2_desc">
+        Containerized applications deployed on Kubernetes with automated CI/CD via GitHub Actions. VPCs, Security Groups, and RDS instances provisioned using modular Terraform configurations.
+      </p>
+      <div class="proj-stack">
+        <span class="stack-tag">Kubernetes</span>
+        <span class="stack-tag">GitHub Actions</span>
+        <span class="stack-tag">Terraform</span>
+        <span class="stack-tag">AWS RDS</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-name">UFCGate</div>
+          <div class="proj-cat" data-key="p3_cat">Backend &amp; Access Control</div>
+        </div>
+        <a href="https://github.com/gabrielMiGC" target="_blank" rel="noopener" class="proj-gh-link" title="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+      </div>
+      <p class="proj-desc" data-key="p3_desc">
+        High-consistency database for biometric logs and real-time lab access management. PII security, LGPD compliance, and hardware data stream integration via secure Django backend.
+      </p>
+      <div class="proj-stack">
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Django</span>
+        <span class="stack-tag">LGPD</span>
+        <span class="stack-tag">Biometrics</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-name">Web Scrapers</div>
+          <div class="proj-cat" data-key="p4_cat">Data Engineering &amp; Performance</div>
+        </div>
+      </div>
+      <p class="proj-desc" data-key="p4_desc">
+        High-concurrency Python scrapers for real-time market opportunity detection. Extracts and transforms data from multiple sources, feeding mathematical models for automated decision-making.
+      </p>
+      <div class="proj-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Async</span>
+        <span class="stack-tag">ETL</span>
+        <span class="stack-tag">Data Mining</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-name">ETL/ELT Pipelines</div>
+          <div class="proj-cat" data-key="p5_cat">Data Engineering &amp; Performance</div>
+        </div>
+      </div>
+      <p class="proj-desc" data-key="p5_desc">
+        Data pipelines on the Databricks platform under Medallion Architecture. Hands-on experience creating automated workflow jobs for large-scale data processing and migration.
+      </p>
+      <div class="proj-stack">
+        <span class="stack-tag">Databricks</span>
+        <span class="stack-tag">PySpark</span>
+        <span class="stack-tag">Medallion</span>
+        <span class="stack-tag">Delta Lake</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     EDUCATION
+============================= -->
+<section class="section" id="education">
+  <div class="sec-head">
+    <span class="sec-num">04.</span>
+    <h2 class="sec-title" data-key="sec_edu">Education</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="edu-main">
+    <div>
+      <div class="edu-degree" data-key="edu_deg">B.Sc. Computer Science</div>
+      <div class="edu-school">UFC · Universidade Federal do Ceará — Russas, CE</div>
+    </div>
+    <div class="edu-year">2021 — 2026</div>
+  </div>
+
+  <div class="research-list">
+    <div class="research-item">
+      <span class="r-dot"></span>
+      <span data-key="res1">Researcher at NEMO Lab — Machine Learning &amp; Optimization (2024–2026)</span>
+    </div>
+    <div class="research-item">
+      <span class="r-dot"></span>
+      <span data-key="res2">Developer at EPRA (2025)</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span data-key="footer_made">made with</span>
+  <span style="color:var(--accent)"> ♥ </span>
+  <span data-key="footer_by">by</span>
+  Gabriel Miranda ·
+  <a href="https://github.com/gabrielMiGC/gabrielMiGC.github.io" target="_blank" rel="noopener">source</a>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ---- i18n ---- */
+const LANG = {
+  en: {
+    nav_skills:'skills', nav_exp:'experience', nav_proj:'projects', nav_edu:'education',
+    role1:'Platform Engineer', role2:'Data Architect',
+    hero_bio:'Computer Science graduate from UFC, specialized in scalable system architecture, secure data engineering, and cloud infrastructure. I build robust, observable platforms from the ground up using AWS, PostgreSQL &amp; Terraform.',
+    stat_exp:'years exp.', stat_proj:'projects', stat_tech:'technologies', stat_uni:'CS graduate',
+    cta_work:'View my work ↓', cta_contact:'Get in touch',
+    sec_skills:'Technical Skills',
+    sk_data:'Data', sk_cloud:'Cloud &amp; Infrastructure', sk_backend:'Backend', sk_devops:'DevOps &amp; Security',
+    sec_exp:'Experience', present:'Present',
+    e1_role:'Platform Engineer &amp; Data Architect',
+    e1_b1:'Designed a unified event management platform with high availability and transactional security.',
+    e1_b2:'Implemented Infrastructure as Code (Terraform) for automated provisioning of AWS environments (Dev/Prod).',
+    e1_b3:'Optimized database performance using Redis and advanced PostgreSQL strategies, reducing query latency.',
+    e2_role:'Database &amp; Backend Systems Intern',
+    e2_b1:'Developed an inventory management system focused on data traceability and ACID-compliant transactions.',
+    e2_b2:'Authored complex Stored Procedures and Triggers in PL/pgSQL for automatic stock reconciliation.',
+    e2_b3:'Built ETL pipelines using PySpark to streamline legacy data migration.',
+    e3_role:'Security Analysis Intern',
+    e3_b1:'Conducted code reviews on backend modules, focusing on Firebase security rules and RBAC.',
+    e3_b2:'Improved data handling protocols for a social network, mitigating security vulnerabilities.',
+    e3_b3:'Performed application data monitoring and security auditing.',
+    sec_proj:'Projects',
+    p1_cat:'Platform Engineering &amp; Data Security',
+    p1_desc:'Multi-tenant infrastructure on AWS S3 with isolated PostgreSQL schemas. Row Level Security (RLS) + Pgcrypto encryption. Full observability stack with Prometheus/Grafana and real-time Telegram alerts.',
+    p2_cat:'DevOps &amp; Cloud Native',
+    p2_desc:'Containerized applications deployed on Kubernetes with automated CI/CD via GitHub Actions. VPCs, Security Groups, and RDS instances provisioned using modular Terraform configurations.',
+    p3_cat:'Backend &amp; Access Control',
+    p3_desc:'High-consistency database for biometric logs and real-time lab access management. PII security, LGPD compliance, and hardware data stream integration via secure Django backend.',
+    p4_cat:'Data Engineering &amp; Performance',
+    p4_desc:'High-concurrency Python scrapers for real-time market opportunity detection. Extracts and transforms data from multiple sources, feeding mathematical models for automated decision-making.',
+    p5_cat:'Data Engineering &amp; Performance',
+    p5_desc:'Data pipelines on the Databricks platform under Medallion Architecture. Hands-on experience creating automated workflow jobs for large-scale data processing and migration.',
+    sec_edu:'Education',
+    edu_deg:'B.Sc. Computer Science',
+    res1:'Researcher at NEMO Lab — Machine Learning &amp; Optimization (2024–2026)',
+    res2:'Developer at EPRA (2025)',
+    footer_made:'made with', footer_by:'by',
+  },
+  pt: {
+    nav_skills:'habilidades', nav_exp:'experiência', nav_proj:'projetos', nav_edu:'formação',
+    role1:'Engenheiro de Plataforma', role2:'Arquiteto de Dados',
+    hero_bio:'Graduado em Ciência da Computação pela UFC com forte especialização em Engenharia de Plataforma, Desenvolvimento Backend e Segurança de Dados. Especialista na arquitetura de sistemas escaláveis com AWS, PostgreSQL e Terraform.',
+    stat_exp:'anos de exp.', stat_proj:'projetos', stat_tech:'tecnologias', stat_uni:'graduado UFC',
+    cta_work:'Ver meu trabalho ↓', cta_contact:'Entrar em contato',
+    sec_skills:'Competências Técnicas',
+    sk_data:'Dados', sk_cloud:'Cloud &amp; Infraestrutura', sk_backend:'Backend', sk_devops:'DevOps &amp; Segurança',
+    sec_exp:'Experiência Profissional', present:'Presente',
+    e1_role:'Engenheiro de Plataforma e Arquiteto de Dados',
+    e1_b1:'Arquitetura de plataforma unificada para gestão de eventos, focando em alta disponibilidade e segurança transacional.',
+    e1_b2:'Implementação de Infraestrutura como Código (Terraform) para provisionamento automatizado de ambientes AWS (Dev/Prod).',
+    e1_b3:'Otimização de performance do banco de dados utilizando Redis e estratégias avançadas no PostgreSQL, reduzindo a latência de consultas.',
+    e2_role:'Estagiário em Sistemas de Banco de Dados e Backend',
+    e2_b1:'Desenvolvimento de sistema de gestão de inventário focado em rastreabilidade de dados e transações compatíveis com ACID.',
+    e2_b2:'Autoria de Stored Procedures e Triggers complexas em PL/pgSQL para reconciliação automática de estoque.',
+    e2_b3:'Implementação de pipelines ETL com PySpark para agilizar a migração de dados legados.',
+    e3_role:'Estagiário em Análise de Segurança',
+    e3_b1:'Realização de Code Reviews em módulos de backend, focando em regras de segurança do Firebase e RBAC.',
+    e3_b2:'Aprimoramento de protocolos de manipulação de dados para uma rede social, mitigando vulnerabilidades de segurança.',
+    e3_b3:'Monitoramento de dados da aplicação e auditoria de segurança.',
+    sec_proj:'Principais Projetos',
+    p1_cat:'Engenharia de Plataforma e Segurança de Dados',
+    p1_desc:'Infraestrutura multi-tenant no AWS S3 com schemas PostgreSQL isolados. Row Level Security (RLS) + criptografia nativa via Pgcrypto. Stack completa de observabilidade com Prometheus/Grafana e alertas em tempo real via Telegram.',
+    p2_cat:'DevOps e Cloud Native',
+    p2_desc:'Aplicações containerizadas implantadas em Kubernetes com pipelines de CI/CD automatizados via GitHub Actions. Provisionamento de VPCs, Security Groups e instâncias RDS com Terraform modular.',
+    p3_cat:'Backend e Controle de Acesso',
+    p3_desc:'Banco de dados de alta consistência para logs biométricos e gestão de acesso a laboratórios em tempo real. Segurança de PIIs, compliance com LGPD e integração de fluxos de hardware via Django.',
+    p4_cat:'Engenharia de Dados e Performance',
+    p4_desc:'Scrapers de alta concorrência em Python para identificar oportunidades de mercado em tempo real, extraindo e transformando dados de múltiplas fontes para alimentar algoritmos matemáticos.',
+    p5_cat:'Engenharia de Dados e Performance',
+    p5_desc:'Desenvolvimento de pipelines na plataforma Databricks sob arquitetura Medalhão. Experiência na criação de jobs para automação de workflows de dados em larga escala.',
+    sec_edu:'Formação e Experiências Acadêmicas',
+    edu_deg:'Bacharelado em Ciência da Computação',
+    res1:'Pesquisador no Núcleo NEMO — Machine Learning e Otimização (2024–2026)',
+    res2:'Desenvolvedor no EPRA (2025)',
+    footer_made:'feito com', footer_by:'por',
+  }
+};
+
+let curLang = 'en';
+
+function applyLang(lang) {
+  curLang = lang;
+  const d = LANG[lang];
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const k = el.getAttribute('data-key');
+    if (d[k] !== undefined) el.innerHTML = d[k];
+  });
+  document.getElementById('lang-btn').textContent = lang === 'en' ? 'PT' : 'EN';
+  document.documentElement.lang = lang;
+  restartTerminal();
+}
+
+function toggleLang() { applyLang(curLang === 'en' ? 'pt' : 'en'); }
+
+/* ---- Terminal animation ---- */
+const TERMS = {
+  en: [
+    { cmd: 'whoami',           out: 'gabriel miranda · platform engineer' },
+    { cmd: 'cat stack.txt',    out: 'AWS · PostgreSQL · Terraform · K8s · TypeScript' },
+    { cmd: 'echo $AVAILABLE',  out: 'open to new opportunities ✓' },
+  ],
+  pt: [
+    { cmd: 'whoami',              out: 'gabriel miranda · engenheiro de plataforma' },
+    { cmd: 'cat habilidades.txt', out: 'AWS · PostgreSQL · Terraform · K8s · TypeScript' },
+    { cmd: 'echo $STATUS',        out: 'aberto a novas oportunidades ✓' },
+  ],
+};
+
+let tIdx = 0, cIdx = 0, tTimer = null, phase = 'typing'; // phases: typing | showing | clearing
+
+function restartTerminal() {
+  clearTimeout(tTimer);
+  tIdx = 0; cIdx = 0; phase = 'typing';
+  const cmd = document.getElementById('term-cmd');
+  const out = document.getElementById('term-out');
+  if (cmd) cmd.textContent = '';
+  if (out) out.textContent = '';
+  tickTerminal();
+}
+
+function tickTerminal() {
+  const cmd = document.getElementById('term-cmd');
+  const out = document.getElementById('term-out');
+  if (!cmd) return;
+
+  const lines = TERMS[curLang];
+  const line  = lines[tIdx % lines.length];
+
+  if (phase === 'typing') {
+    if (cIdx < line.cmd.length) {
+      cmd.textContent = line.cmd.slice(0, ++cIdx);
+      tTimer = setTimeout(tickTerminal, 75);
+    } else {
+      phase = 'showing';
+      out.textContent = '→ ' + line.out;
+      tTimer = setTimeout(tickTerminal, 2400);
+    }
+  } else if (phase === 'showing') {
+    phase = 'clearing';
+    out.textContent = '';
+    cmd.textContent = '';
+    cIdx = 0;
+    tIdx = (tIdx + 1) % lines.length;
+    phase = 'typing';
+    tTimer = setTimeout(tickTerminal, 300);
+  }
+}
+
+/* ---- Scroll progress bar ---- */
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('progress-bar');
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  if (el) el.style.width = Math.min(pct, 100) + '%';
+
+  // Scroll-to-top button
+  const st = document.getElementById('scroll-top');
+  if (st) st.classList.toggle('show', window.scrollY > 400);
+
+  // Active nav link
+  const sections = ['skills','experience','projects','education'];
+  let active = '';
+  sections.forEach(id => {
+    const s = document.getElementById(id);
+    if (s && window.scrollY >= s.offsetTop - 120) active = id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + active);
+  });
+}, { passive: true });
+
+/* ---- Intersection observer (scroll reveal) ---- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.tl-item, .proj-card').forEach(el => io.observe(el));
+
+/* ---- Stagger project cards ---- */
+document.querySelectorAll('.proj-card').forEach((c, i) => {
+  c.style.transitionDelay = (i * 0.08) + 's';
+});
+
+/* ---- Init ---- */
+applyLang('en');
+</script>
+
+</body>
+</html>

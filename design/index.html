@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gabriel Miranda - Design Portfolio" />
+  <title>Gabriel Miranda &middot; Design Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <nav class="site-nav" aria-label="Design portfolio navigation">
+    <a class="nav-logo" href="../">gabriel<span>.design</span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="../" data-key="nav_home">inicio</a>
+      <a class="nav-link active" href="./" data-key="nav_design">design</a>
+      <a class="nav-link" href="#projects" data-key="nav_projects">projetos</a>
+      <button class="lang-btn" type="button" data-lang-target>EN</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="design-hero">
+      <div class="rail-stack" aria-hidden="true">
+        <div class="image-rail slow" data-direction="left">
+          <div class="rail-track" data-duplicate>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-01.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-02.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-03.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-04.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-05.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-06.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-07.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/nutripro/slide-08.png" alt="" /></figure>
+          </div>
+        </div>
+        <div class="image-rail fast" data-direction="right">
+          <div class="rail-track" data-duplicate>
+            <figure class="rail-card"><img src="./assets/qomanda/slide-01.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/qomanda/slide-02.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/qomanda/slide-03.png" alt="" /></figure>
+          </div>
+        </div>
+        <div class="image-rail" data-direction="left">
+          <div class="rail-track" data-duplicate>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-01.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-02.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-03.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-04.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-05.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-06.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-07.png" alt="" /></figure>
+            <figure class="rail-card"><img src="./assets/orkestra/cards/slide-08.png" alt="" /></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <p class="eyebrow" data-key="hero_kicker">design para social media / motion icons</p>
+        <h1 class="hero-title" data-key="hero_title">Portf&oacute;lio de <span>Design</span></h1>
+        <p class="hero-lede" data-key="hero_lede">Uma galeria compacta de carross&eacute;is para Instagram, posts est&aacute;ticos e sistemas visuais guiados por narrativa de produto.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects" data-key="hero_cta">Ver projetos</a>
+          <a class="btn btn-ghost" href="../" data-key="hero_home">Portf&oacute;lio de dados</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section statement">
+      <div class="section-inner">
+        <p class="section-kicker" data-key="statement_kicker">pr&aacute;tica</p>
+        <h2 class="section-title" data-key="statement_title">Design para comunicar produtos</h2>
+        <p data-key="statement_body">Fa&ccedil;o designs utilizando Canva, edito usando CapCut e costumo desenvolver pe&ccedil;as visuais para sistemas e produtos da Miranda Labs.</p>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-inner">
+        <p class="section-kicker" data-key="projects_kicker">trabalhos selecionados</p>
+        <h2 class="section-title" data-key="projects_title">P&aacute;ginas dos projetos</h2>
+        <div class="project-links">
+          <a class="project-card" href="./orkestra/">
+            <img src="./assets/orkestra/cards/slide-01.png" alt="Orkestra carousel cover" />
+            <div class="project-card-body">
+              <h3>Orkestra</h3>
+              <p data-key="card_orkestra">Visual de plataforma de eventos, cards de carrossel, conceitos de interface e anima&ccedil;&otilde;es de loading states.</p>
+            </div>
+          </a>
+          <a class="project-card" href="./qomanda/">
+            <img src="./assets/qomanda/slide-01.png" alt="Qomanda carousel cover" />
+            <div class="project-card-body">
+              <h3>Qomanda</h3>
+              <p data-key="card_qomanda">Carrossel focado em restaurantes, conectando dores operacionais a uma promessa direta de produto.</p>
+            </div>
+          </a>
+          <a class="project-card" href="./nutripro/">
+            <img src="./assets/nutripro/slide-01.png" alt="NutriPro carousel cover" />
+            <div class="project-card-body">
+              <h3>NutriPro</h3>
+              <p data-key="card_nutripro">Carrossel para gest&atilde;o de cl&iacute;nicas, organizado em torno da rotina e dos m&oacute;dulos do sistema.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" data-key="footer_text">Gabriel Miranda &middot; Portf&oacute;lio de Design</footer>
+  <script src="./design.js"></script>
+</body>
+</html>

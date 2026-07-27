@@ -441,10 +441,6 @@ img {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.concept-grid .gallery-item img {
-  aspect-ratio: 16 / 9;
-}
-
 .browser-frame {
   margin-top: 30px;
   overflow: hidden;

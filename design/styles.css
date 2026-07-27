@@ -419,6 +419,7 @@ img {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
   gap: 16px;
   margin-top: 30px;
 }
@@ -432,12 +433,16 @@ img {
 
 .gallery-item img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
 }
 
 .wide-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.concept-grid .gallery-item img {
+  aspect-ratio: 16 / 9;
 }
 
 .browser-frame {
